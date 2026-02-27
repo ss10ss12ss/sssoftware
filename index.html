@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>屋号未定 | 公式サイト</title>
+  <meta name="description" content="iOSアプリの企画・開発・運用を行う事業サイトです。サポート窓口とプライバシー情報を掲載しています。" />
+  <style>
+    :root {
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.95);
+      --line: rgba(0, 0, 0, 0.2);
+      --text: #000000;
+      --subtext: #222222;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Avenir Next", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+
+    .site {
+      position: relative;
+      z-index: 1;
+      width: min(1080px, calc(100% - 34px));
+      margin: 0 auto;
+      padding: 18px 0 56px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.84rem;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.18);
+    }
+
+    .hero {
+      margin-top: 18px;
+      padding: 34px clamp(18px, 4.8vw, 44px);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-lg);
+      animation: rise-in 720ms ease-out both;
+    }
+
+    .hero-tag {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000000;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .lead {
+      margin: 0;
+      font-size: clamp(1rem, 1.7vw, 1.16rem);
+      color: var(--subtext);
+      max-width: 780px;
+    }
+
+    .hero-actions {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: #000000;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .btn.ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .btn.ghost:hover {
+      transform: translateY(-1px);
+      background: #ffffff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.14);
+    }
+
+    .layout {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1.28fr 0.72fr;
+    }
+
+    .panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow-md);
+      padding: 20px;
+      animation: rise-in 700ms ease-out both;
+    }
+
+    .panel h2 {
+      margin: 0 0 11px;
+      font-size: 1.16rem;
+      line-height: 1.3;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.95rem;
+    }
+
+    .facts {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .fact {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 0.83rem;
+      margin-bottom: 6px;
+      color: #111111;
+    }
+
+    .fact span {
+      font-size: 0.9rem;
+      color: #333333;
+    }
+
+    .apps {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .app-card {
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      border-radius: 16px;
+      padding: 14px;
+      background: #ffffff;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .app-card::after {
+      content: none;
+    }
+
+    .app-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+    }
+
+    .app-name {
+      margin: 0 0 6px;
+      font-weight: 700;
+      font-size: 1.02rem;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .app-meta {
+      margin: 0 0 7px;
+      font-size: 0.83rem;
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+
+    .app-desc {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.92rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-top: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .support-list {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .support-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      color: var(--subtext);
+      font-size: 0.93rem;
+    }
+
+    .dot {
+      margin-top: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #000000;
+      flex: 0 0 auto;
+    }
+
+    .legal-links {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .legal-links a {
+      text-decoration: none;
+      color: #000000;
+      font-weight: 700;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 11px;
+      padding: 10px 12px;
+      background: #ffffff;
+      transition: all 0.18s ease;
+    }
+
+    .legal-links a:hover {
+      background: #f2f2f2;
+      border-color: rgba(0, 0, 0, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .footer {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.83rem;
+      color: #222222;
+      animation: rise-in 760ms ease-out both;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 940px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site {
+        width: min(1080px, calc(100% - 20px));
+        padding-top: 12px;
+      }
+
+      .topbar {
+        top: 8px;
+        padding: 10px;
+      }
+
+      .nav {
+        gap: 5px;
+      }
+
+      .nav a {
+        padding: 6px 10px;
+        font-size: 0.79rem;
+      }
+
+      .hero {
+        padding: 24px 16px;
+      }
+
+      .facts {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="site">
+    <header class="topbar">
+      <a href="#top" class="brand">屋号未定</a>
+      <nav class="nav" aria-label="サイト内リンク">
+        <a href="#about">事業概要</a>
+        <a href="#apps">アプリ</a>
+        <a href="#support">サポート</a>
+        <a href="#legal">法務情報</a>
+      </nav>
+    </header>
+
+    <section id="top" class="hero">
+      <p class="hero-tag">APP STORE PUBLISHER</p>
+      <h1>日常で使える実用アプリを、継続的に公開</h1>
+      <p class="lead">
+        当サイトは、iOSアプリの企画・開発・運用を行う事業の公式ページです。App Store提出時に必要なサポート窓口とプライバシー情報を公開しています。
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="support.html">サポートページへ</a>
+        <a class="btn ghost" href="privacy_policy_ja.html">プライバシーポリシー</a>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section id="about" class="panel">
+        <h2>事業概要</h2>
+        <p>
+          個人ユーザー向けのユーティリティ系アプリを中心に、設計・実装・保守・改善を一気通貫で行います。新規アプリの公開だけでなく、既存アプリの継続改善とサポート対応にも注力しています。
+        </p>
+        <div class="facts">
+          <div class="fact">
+            <strong>事業名</strong>
+            <span>屋号未定</span>
+          </div>
+          <div class="fact">
+            <strong>対応プラットフォーム</strong>
+            <span>iOS / iPadOS</span>
+          </div>
+          <div class="fact">
+            <strong>連絡先</strong>
+            <span>support@example.com</span>
+          </div>
+        </div>
+
+        <div id="apps" class="apps" aria-label="アプリ一覧">
+          <article class="app-card">
+            <h3 class="app-name">test app</h3>
+            <p class="app-meta">カテゴリ: Utility</p>
+            <p class="app-desc">
+              日常用途向けの情報管理アプリ。使いやすさを重視したカード型UIと、シンプルな操作フローを提供します。
+            </p>
+            <span class="status-badge">申請予定</span>
+          </article>
+
+          <article class="app-card">
+            <h3 class="app-name">test β app</h3>
+            <p class="app-meta">カテゴリ: Utility</p>
+            <p class="app-desc">
+              上記アプリの機能拡張版。フィードバック反映を前提に、段階的なアップデートを実施します。
+            </p>
+            <span class="status-badge">申請予定</span>
+          </article>
+
+          <article class="app-card">
+            <h3 class="app-name">Upcoming Apps</h3>
+            <p class="app-meta">カテゴリ: Productivity / Utility</p>
+            <p class="app-desc">
+              今後も複数アプリを継続公開予定です。各アプリの詳細は公開開始に合わせて本ページに追記します。
+            </p>
+            <span class="status-badge">準備中</span>
+          </article>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <section id="support">
+          <h2>ユーザーサポート</h2>
+          <p>不具合報告・機能要望・お問い合わせは以下窓口で受け付けています。</p>
+          <ul class="support-list">
+            <li><span class="dot"></span><span>メール: <a href="mailto:support@example.com">support@example.com</a></span></li>
+            <li><span class="dot"></span><span>対応時間: 平日 10:00-18:00（日本時間）</span></li>
+            <li><span class="dot"></span><span>通常回答: 2営業日以内</span></li>
+          </ul>
+          <div class="legal-links" style="margin-top: 12px;">
+            <a href="support.html">Support URL 用ページを開く</a>
+          </div>
+        </section>
+
+        <section id="legal" style="margin-top: 18px;">
+          <h2>法務情報</h2>
+          <p>App Store提出時に必要な公開情報です。</p>
+          <div class="legal-links">
+            <a href="privacy_policy_ja.html">プライバシーポリシーを見る</a>
+            <a href="terms_of_service_ja.html">利用規約を見る</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> 屋号未定</div>
+      <div>Company name / address は提出前に実情報へ更新してください。</div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

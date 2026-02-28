@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>サポート | sssoftware</title>
+  <meta name="description" content="sssoftwareのユーザーサポート窓口です。" />
+  <style>
+    :root {
+      --text: #000000;
+      --subtext: #222222;
+      --line: rgba(0, 0, 0, 0.2);
+      --panel: rgba(255, 255, 255, 0.9);
+      --radius: 18px;
+      --shadow: 0 16px 36px rgba(0, 0, 0, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    main {
+      width: min(920px, calc(100% - 28px));
+      margin: 22px auto 30px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 28px);
+      animation: rise-in 620ms ease-out both;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3.8vw, 2.1rem);
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000000;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.87rem;
+    }
+
+    .item span, .item a {
+      font-size: 0.95rem;
+      color: #222222;
+    }
+
+    .apps {
+      margin-top: 18px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.3);
+      padding-top: 14px;
+    }
+
+    .apps h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .apps ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--subtext);
+      font-size: 0.95rem;
+    }
+
+    .links {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .links a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.24);
+      border-radius: 11px;
+      padding: 9px 12px;
+      background: #fff;
+      transition: all 0.18s ease;
+    }
+
+    .links a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0, 0, 0, 0.35);
+      background: #f2f2f2;
+    }
+
+    .foot {
+      margin-top: 12px;
+      text-align: center;
+      color: #222222;
+      font-size: 0.82rem;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <h1>ユーザーサポート窓口</h1>
+      <p class="meta">App Store Support URL</p>
+      <p style="margin-top: 10px;">
+        本ページは、公開中アプリおよび申請予定アプリに関するお問い合わせ窓口です。確認後、通常5営業日以内に返信します。
+      </p>
+
+      <div class="grid">
+        <div class="item">
+          <strong>メール</strong>
+          <a href="mailto:support@sssoftware.biz">support@sssoftware.biz</a>
+        </div>
+        <div class="item">
+          <strong>対応時間</strong>
+          <span>平日 10:00-18:00（日本時間）</span>
+        </div>
+        <div class="item">
+          <strong>運営</strong>
+          <span>sssoftware</span>
+        </div>
+        <div class="item">
+          <strong>最終更新</strong>
+          <span>2026-02-25</span>
+        </div>
+      </div>
+
+      <div class="apps">
+        <h2>対象アプリ（予定含む）</h2>
+        <ul>
+          <li>test app</li>
+          <li>test β app</li>
+          <li>今後公開予定のiOSアプリ</li>
+        </ul>
+      </div>
+
+      <div class="links">
+        <a href="index.html">トップページ</a>
+        <a href="privacy_policy_ja.html">プライバシーポリシー</a>
+        <a href="terms_of_service_ja.html">利用規約</a>
+      </div>
+    </section>
+
+    <div class="foot">会社名・住所・メールアドレスは提出前に実データへ更新してください。</div>
+  </main>
+</body>
+</html>

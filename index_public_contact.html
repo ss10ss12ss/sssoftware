@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>sssoftware</title>
+  <meta name="description" content="CardStock / Journeychronicle を含む sssoftware の事業・製品・サポート情報を掲載するサイトです。" />
+  <style>
+    :root {
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.95);
+      --line: rgba(0, 0, 0, 0.2);
+      --text: #000000;
+      --subtext: #222222;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Avenir Next", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+
+    .site {
+      position: relative;
+      z-index: 1;
+      width: min(1080px, calc(100% - 34px));
+      margin: 0 auto;
+      padding: 18px 0 56px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.84rem;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.18);
+    }
+
+    .hero {
+      margin-top: 18px;
+      padding: 34px clamp(18px, 4.8vw, 44px);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-lg);
+      animation: rise-in 720ms ease-out both;
+    }
+
+    .hero-tag {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000000;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      font-weight: 600;
+    }
+
+    .lead {
+      margin: 0;
+      font-size: clamp(1rem, 1.7vw, 1.16rem);
+      color: var(--subtext);
+      max-width: 780px;
+    }
+
+    .hero-actions {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: #000000;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .btn.ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .btn.ghost:hover {
+      transform: translateY(-1px);
+      background: #ffffff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.14);
+    }
+
+    .layout {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1.28fr 0.72fr;
+    }
+
+    .panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow-md);
+      padding: 20px;
+      animation: rise-in 700ms ease-out both;
+    }
+
+    .panel h2 {
+      margin: 0 0 11px;
+      font-size: 1.16rem;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.95rem;
+    }
+
+    .facts {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .fact {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 0.83rem;
+      margin-bottom: 6px;
+      color: #111111;
+      font-weight: 500;
+    }
+
+    .fact span {
+      font-size: 0.9rem;
+      color: #333333;
+    }
+
+    .apps {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .app-card {
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      border-radius: 16px;
+      padding: 14px;
+      background: #ffffff;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .app-card::after {
+      content: none;
+    }
+
+    .app-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+    }
+
+    .app-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .app-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      object-fit: cover;
+      flex: 0 0 auto;
+    }
+
+    .app-name {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.02rem;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .app-meta {
+      margin: 4px 0 0;
+      font-size: 0.83rem;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    .app-desc {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.92rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      margin-top: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .support-list {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .support-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      color: var(--subtext);
+      font-size: 0.93rem;
+    }
+
+    .dot {
+      margin-top: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #000000;
+      flex: 0 0 auto;
+    }
+
+    .legal-links {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .legal-links a {
+      text-decoration: none;
+      color: #000000;
+      font-weight: 600;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 11px;
+      padding: 10px 12px;
+      background: #ffffff;
+      transition: all 0.18s ease;
+    }
+
+    .legal-links a:hover {
+      background: #f2f2f2;
+      border-color: rgba(0, 0, 0, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .footer {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.83rem;
+      color: #222222;
+      animation: rise-in 760ms ease-out both;
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 940px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site {
+        width: min(1080px, calc(100% - 20px));
+        padding-top: 12px;
+      }
+
+      .topbar {
+        top: 8px;
+        padding: 10px;
+      }
+
+      .nav {
+        gap: 5px;
+      }
+
+      .nav a {
+        padding: 6px 10px;
+        font-size: 0.79rem;
+      }
+
+      .hero {
+        padding: 24px 16px;
+      }
+
+      .facts {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="site">
+    <header class="topbar">
+      <a href="#top" class="brand">sssoftware</a>
+      <nav class="nav" aria-label="サイト内リンク">
+        <a href="#company">会社概要</a>
+        <a href="#business">事業内容</a>
+        <a href="#products">製品</a>
+        <a href="#support">サポート</a>
+        <a href="#legal">商取引法情報</a>
+      </nav>
+    </header>
+
+    <section id="top" class="hero">
+      <p class="hero-tag">BUSINESS SITE</p>
+      <h1>事業情報・製品サポート</h1>
+      <p class="lead">
+        sssoftware は、アプリの企画・開発・提供・販売を中心とする事業を運営しています。
+        現在は iOS / iPadOS 向けアプリ領域を主軸とし、今後は周辺領域へ展開する方針です。
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="support.html">サポートページへ</a>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section id="company" class="panel">
+        <h2>会社概要</h2>
+        <p>
+          当サイトは、sssoftware の事業情報、製品情報、サポート情報を案内する公式ページです。
+          App Store 掲載に必要なサポート窓口や法令関連情報も本ページから確認できます。
+        </p>
+        <div class="facts">
+          <div class="fact">
+            <strong>事業名</strong>
+            <span>sssoftware</span>
+          </div>
+          <div class="fact">
+            <strong>主な事業領域</strong>
+            <span>アプリ制作・販売</span>
+          </div>
+          <div class="fact">
+            <strong>展開方針</strong>
+            <span>事業領域を順次拡張予定</span>
+          </div>
+        </div>
+
+        <div id="business" class="apps" aria-label="事業内容">
+          <article class="app-card">
+            <div class="app-head">
+              <div>
+                <h3 class="app-name">事業内容</h3>
+                <p class="app-meta">Business</p>
+              </div>
+            </div>
+            <p class="app-desc">
+              モバイルアプリの企画・設計・実装・運用保守・販売を一気通貫で実施しています。
+              既存製品の改善と新規製品の展開を継続し、ユーザーサポートと品質向上を重視します。
+            </p>
+            <span class="status-badge">運営中</span>
+          </article>
+        </div>
+
+        <div id="products" class="apps" aria-label="製品一覧">
+          <article class="app-card">
+            <div class="app-head">
+              <img class="app-icon" src="assets/icons/cardstock-icon.png" alt="CardStock アイコン" loading="lazy" />
+              <div>
+                <h3 class="app-name">CardStock</h3>
+                <p class="app-meta">カテゴリ: Utility / Productivity</p>
+              </div>
+            </div>
+            <p class="app-desc">
+              診察券・会員証・ポイントカードなどを画像付きで管理できるカード管理アプリ。カテゴリ分け、検索、表示マスク、パスコード/生体認証、バックアップ/復元に対応します。
+            </p>
+            <span class="status-badge">提供中</span>
+          </article>
+
+          <article class="app-card">
+            <div class="app-head">
+              <img class="app-icon" src="assets/icons/journeychronicle-icon.png" alt="Journeychronicle アイコン" loading="lazy" />
+              <div>
+                <h3 class="app-name">Journeychronicle</h3>
+                <p class="app-meta">カテゴリ: Travel / Lifestyle</p>
+              </div>
+            </div>
+            <p class="app-desc">
+              地図と「訪れた場所」画面を切り替えながら、訪問地点を写真・メモ付きで記録できるアプリ。カレンダー表示、カテゴリ管理、位置情報利用の ON/OFF 切替、表示カスタマイズに対応します。
+            </p>
+            <span class="status-badge">提供中</span>
+          </article>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <section id="support">
+          <h2>サポート・窓口情報</h2>
+          <p>App Store 掲載に必要な案内（サポート / 商取引法情報）を掲載しています。</p>
+          <ul class="support-list">
+            <li><span class="dot"></span><span>メール: <a href="mailto:support@sssoftware.biz">support@sssoftware.biz</a></span></li>
+            <li><span class="dot"></span><span>対応時間: 平日 10:00-18:00（日本時間）</span></li>
+            <li><span class="dot"></span><span>通常回答: 5営業日以内</span></li>
+            <li><span class="dot"></span><span>商取引法情報: 本ページ下部に掲載</span></li>
+          </ul>
+          <div class="legal-links" style="margin-top: 12px;">
+            <a href="support.html">サポートページ</a>
+            <a href="appstore_support_ja.html">App Store向けサポート情報</a>
+            <a href="#legal">特定商取引法に基づく情報</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <section id="legal" class="panel" style="margin-top: 14px;">
+      <h2>特定商取引法に基づく情報</h2>
+      <div class="facts">
+        <div class="fact">
+          <strong>販売事業者</strong>
+          <span>sssoftware</span>
+        </div>
+        <div class="fact">
+          <strong>運営責任者</strong>
+          <span>sssoftware</span>
+        </div>
+        <div class="fact">
+          <strong>連絡先</strong>
+          <span>support@sssoftware.biz</span>
+        </div>
+        <div class="fact">
+          <strong>所在地・電話番号</strong>
+          <span>住所: 東京都文京区大塚4-42-19-603<br />電話番号: 07091771012</span>
+        </div>
+        <div class="fact">
+          <strong>販売価格</strong>
+          <span>各商品・各サービスの表示価格</span>
+        </div>
+      </div>
+      <ul class="support-list" style="margin-top: 12px;">
+        <li><span class="dot"></span><span>商品代金以外の必要料金: 通信料等は利用者負担です。</span></li>
+        <li><span class="dot"></span><span>支払時期・方法: App Store 決済画面の表示に従います。</span></li>
+        <li><span class="dot"></span><span>提供時期: 決済確認後、各サービスの仕様に従い提供します。</span></li>
+        <li><span class="dot"></span><span>返品・キャンセル: デジタル商品の性質上、原則として購入後のキャンセルはできません（法令・各プラットフォーム規約に従います）。</span></li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> sssoftware</div>
+      <div>運営: sssoftware / 連絡先: support@sssoftware.biz / 住所: 東京都文京区大塚4-42-19-603 / 電話番号: 07091771012</div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

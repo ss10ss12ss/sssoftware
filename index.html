@@ -173,6 +173,19 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.14);
     }
 
+    .btn.icon-btn {
+      min-width: 46px;
+      padding: 11px 0;
+      line-height: 1;
+    }
+
+    .btn.icon-btn svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      fill: currentColor;
+    }
+
     .layout {
       margin-top: 20px;
       display: grid;
@@ -216,6 +229,10 @@
       padding: 12px;
     }
 
+    .fact.fact-wide {
+      grid-column: 1 / -1;
+    }
+
     .fact strong {
       display: block;
       font-size: 0.83rem;
@@ -233,6 +250,17 @@
       margin-top: 14px;
       display: grid;
       gap: 12px;
+    }
+
+    .section-title {
+      margin: 26px 0 12px;
+      font-size: 1.16rem;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .products-title {
+      margin-top: 34px;
     }
 
     .app-card {
@@ -268,6 +296,8 @@
       border: 1px solid rgba(0, 0, 0, 0.14);
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
       object-fit: cover;
+      display: block;
+      background: #ffffff;
       flex: 0 0 auto;
     }
 
@@ -462,7 +492,6 @@
       <a href="#top" class="brand">sssoftware</a>
       <nav class="nav" aria-label="サイト内リンク">
         <a href="#company">会社概要</a>
-        <a href="#business">事業内容</a>
         <a href="#products">製品</a>
         <a href="#support">サポート</a>
         <a href="#legal">商取引法情報</a>
@@ -478,6 +507,16 @@
       </p>
       <div class="hero-actions">
         <a class="btn primary" href="support.html">サポートページへ</a>
+        <a class="btn ghost icon-btn" href="https://coconala.com/users/5975577?ref=service_main_column" target="_blank" rel="noopener noreferrer" aria-label="coconalaへ" title="coconalaへ">
+          <svg viewBox="0 0 33 33" aria-hidden="true">
+            <path fill="#737373" d="M18.1184 16.5H6.0393l-3.01977 5.2302 18.11857 10.4605 3.0198-5.2302z"></path>
+            <path fill="#d4d4d4" d="M24.1582 26.9604h6.0395V6.03943h-6.0395L18.1187 16.5z"></path>
+            <path fill="#7f7f7f" d="M6.0393 16.5 3.01953 11.2698 21.1381.809326 24.1579 6.03956 18.1184 16.5z"></path>
+            <path fill="#5f5f5f" d="M0 16.5c0 3.3338 2.70571 6.0395 6.03953 6.0395 1.12939 0 2.70571-.61 3.61164-1.1535L18.1186 16.5l-8.46743-4.886c-.90593-.5375-2.48225-1.1536-3.61164-1.1536C2.70571 10.4604 0 13.1662 0 16.5z"></path>
+            <path fill="#969696" d="M27.1779 32.1907c2.8869-1.6669 3.8773-5.3631 2.2104-8.25-.5616-.9784-1.8843-2.0414-2.8023-2.5547l-8.4674-4.886v9.778c-.0121 1.0509.2476 2.7238.8093 3.7022 1.6669 2.893 5.3631 3.8774 8.25 2.2105z"></path>
+            <path fill="#a8a8a8" d="M27.1779.809302c-2.8869-1.666911-6.5831-.676428-8.25 2.210468-.5617.9784-.8214 2.65135-.8093 3.70223v9.778l8.4674-4.886c.918-.5133 2.2407-1.5763 2.8023-2.5547 1.6669-2.88689.6765-6.58309-2.2104-8.249998z"></path>
+          </svg>
+        </a>
       </div>
     </section>
 
@@ -501,28 +540,28 @@
             <strong>展開方針</strong>
             <span>事業領域を順次拡張予定</span>
           </div>
-        </div>
-
-        <div id="business" class="apps" aria-label="事業内容">
-          <article class="app-card">
-            <div class="app-head">
-              <div>
-                <h3 class="app-name">事業内容</h3>
-                <p class="app-meta">Business</p>
-              </div>
-            </div>
-            <p class="app-desc">
+          <div id="business" class="fact fact-wide">
+            <strong>事業内容</strong>
+            <span>
               モバイルアプリの企画・設計・実装・運用保守・販売を一気通貫で実施しています。
               既存製品の改善と新規製品の展開を継続し、ユーザーサポートと品質向上を重視します。
-            </p>
-            <span class="status-badge">運営中</span>
-          </article>
+            </span>
+          </div>
         </div>
 
-        <div id="products" class="apps" aria-label="製品一覧">
+        <h2 id="products" class="section-title products-title">製品</h2>
+        <div class="apps" aria-label="製品一覧">
           <article class="app-card">
             <div class="app-head">
-              <img class="app-icon" src="assets/icons/cardstock-icon.png" alt="CardStock アイコン" loading="lazy" />
+              <img
+                class="app-icon"
+                src="index_public_contact_assets/cardstock-icon.png"
+                alt="CardStock アイコン"
+                width="56"
+                height="56"
+                loading="eager"
+                decoding="sync"
+              />
               <div>
                 <h3 class="app-name">CardStock</h3>
                 <p class="app-meta">カテゴリ: Utility / Productivity</p>
@@ -539,7 +578,15 @@
 
           <article class="app-card">
             <div class="app-head">
-              <img class="app-icon" src="assets/icons/journeychronicle-icon.png" alt="Journeychronicle アイコン" loading="lazy" />
+              <img
+                class="app-icon"
+                src="index_public_contact_assets/journeychronicle-icon.png"
+                alt="Journeychronicle アイコン"
+                width="56"
+                height="56"
+                loading="eager"
+                decoding="sync"
+              />
               <div>
                 <h3 class="app-name">Journeychronicle</h3>
                 <p class="app-meta">カテゴリ: Travel / Lifestyle</p>

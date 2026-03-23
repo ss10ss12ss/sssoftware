@@ -259,8 +259,49 @@
       font-weight: 600;
     }
 
-    .products-title {
+    .section-header {
       margin-top: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-header .section-title {
+      margin: 0;
+    }
+
+    .products-title {
+      margin-top: 0;
+    }
+
+    .section-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      background: #ffffff;
+      color: #000000;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .section-link-btn::after {
+      content: "↗";
+      font-size: 0.8rem;
+      line-height: 1;
+    }
+
+    .section-link-btn:hover {
+      background: #f3f3f3;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .app-card {
@@ -483,6 +524,10 @@
       .facts {
         grid-template-columns: 1fr;
       }
+
+      .section-link-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -549,13 +594,17 @@
           </div>
         </div>
 
-        <h2 id="products" class="section-title products-title">製品</h2>
+        <div class="section-header">
+          <h2 id="products" class="section-title products-title">製品</h2>
+          <a class="section-link-btn" href="products.html">全ての製品を見る</a>
+        </div>
         <div class="apps" aria-label="製品一覧">
           <article class="app-card">
             <div class="app-head">
               <img
                 class="app-icon"
-                src="/index_public_contact_assets/cardstock-icon.png"
+                src="index_public_contact_assets/cardstock-icon.png"
+                data-fallback-src="/index_public_contact_assets/cardstock-icon.png"
                 alt="CardStock アイコン"
                 width="56"
                 height="56"
@@ -580,7 +629,8 @@
             <div class="app-head">
               <img
                 class="app-icon"
-                src="/index_public_contact_assets/journeychronicle-icon.png"
+                src="index_public_contact_assets/journeychronicle-icon.png"
+                data-fallback-src="/index_public_contact_assets/journeychronicle-icon.png"
                 alt="Journeychronicle アイコン"
                 width="56"
                 height="56"
@@ -662,6 +712,19 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <script>
+    // Retry app icons with a root-relative path when the current publish path is different.
+    document.querySelectorAll("img[data-fallback-src]").forEach((img) => {
+      const fallbackSrc = img.getAttribute("data-fallback-src");
+      if (!fallbackSrc) return;
+
+      img.addEventListener("error", () => {
+        if (img.dataset.fallbackApplied === "true") return;
+        img.dataset.fallbackApplied = "true";
+        img.src = fallbackSrc;
+      }, { once: true });
+    });
   </script>
 </body>
 </html>

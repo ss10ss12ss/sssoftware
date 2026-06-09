@@ -1,0 +1,8 @@
+name = "sssoftware-calendar-refresh"
+main = "src/index.js"
+compatibility_date = "2026-06-09"
+
+# Cloudflare Cron Triggers use UTC.
+# This runs monthly and triggers a fresh Cloudflare Pages build.
+[triggers]
+crons = ["0 18 1 * *"]

@@ -486,6 +486,166 @@
       transform: translateY(-1px);
     }
 
+    .business-calendar {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0, 0, 0, 0.14);
+    }
+
+    .business-calendar h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .business-calendar p {
+      font-size: 0.86rem;
+      color: #333333;
+    }
+
+    .calendar-legend {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      color: #222222;
+      font-size: 0.78rem;
+    }
+
+    .calendar-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      background: #ffffff;
+    }
+
+    .legend-swatch.closed {
+      background: #dedede;
+    }
+
+    .calendar-months {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .calendar-month {
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 11px;
+      background: #ffffff;
+    }
+
+    .calendar-caption {
+      padding: 9px 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+      background: #ffffff;
+      display: grid;
+      grid-template-columns: 34px 1fr 34px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .calendar-caption-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .calendar-nav {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      border-radius: 9px;
+      background: #ffffff;
+      color: #000000;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .calendar-nav:hover {
+      background: #f2f2f2;
+      border-color: rgba(0, 0, 0, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .calendar-nav:focus-visible {
+      outline: 2px solid #000000;
+      outline-offset: 2px;
+    }
+
+    .calendar-nav:disabled,
+    .calendar-nav:disabled:hover {
+      background: #f5f5f5;
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #9a9a9a;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .calendar-weekday,
+    .calendar-day {
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+
+    .calendar-weekday {
+      min-height: 28px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background: #f7f7f7;
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .calendar-day {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      border-left: 1px solid rgba(0, 0, 0, 0.08);
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .calendar-day:nth-child(7n + 1) {
+      border-left: 0;
+    }
+
+    .calendar-day.empty {
+      background: #fafafa;
+      color: transparent;
+    }
+
+    .calendar-day.is-closed {
+      background: #dedede;
+      color: #555555;
+    }
+
+    .calendar-day.is-today {
+      box-shadow: inset 0 0 0 2px #000000;
+      font-weight: 700;
+    }
+
     .footer {
       margin-top: 18px;
       border: 1px solid var(--line);
@@ -720,6 +880,15 @@
             <a href="support.html">サポートページ</a>
             <a href="commercial_transactions.html">特定商取引法に基づく情報</a>
           </div>
+          <div class="business-calendar" aria-labelledby="business-calendar-title">
+            <h3 id="business-calendar-title">営業日カレンダー</h3>
+            <p>土日祝は休業日です。表示範囲は当月から前後2年です。</p>
+            <div class="calendar-legend" aria-hidden="true">
+              <span><span class="legend-swatch"></span>営業日</span>
+              <span><span class="legend-swatch closed"></span>休業日</span>
+            </div>
+            <div class="calendar-months" id="business-calendar" aria-live="polite"></div>
+          </div>
         </section>
       </aside>
     </div>
@@ -732,6 +901,190 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <script src="holidays.generated.js"></script>
+  <script>
+    const japaneseHolidays = Object.freeze(window.sssoftwareJapaneseHolidays || {});
+    const weekLabels = ["日", "月", "火", "水", "木", "金", "土"];
+    const holidayYears = Object.keys(japaneseHolidays).map((dateKey) => Number(dateKey.slice(0, 4)));
+    const hasHolidayData = holidayYears.length > 0;
+    const minHolidayCalendarMonth = hasHolidayData ? new Date(Math.min(...holidayYears), 0, 1) : null;
+    const maxHolidayCalendarMonth = hasHolidayData ? new Date(Math.max(...holidayYears), 11, 1) : null;
+    const calendarRangeMonths = 24;
+    let minCalendarMonth;
+    let maxCalendarMonth;
+    let activeCalendarMonth;
+
+    function getJapanToday() {
+      const parts = new Intl.DateTimeFormat("ja-JP-u-ca-gregory", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric"
+      }).formatToParts(new Date());
+      const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+      return new Date(Number(value.year), Number(value.month) - 1, Number(value.day));
+    }
+
+    function getMonthStart(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+
+    function toDateKey(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+
+    function getMonthLabel(monthDate) {
+      return `${monthDate.getFullYear()}年${monthDate.getMonth() + 1}月`;
+    }
+
+    function getMonthIndex(monthDate) {
+      return monthDate.getFullYear() * 12 + monthDate.getMonth();
+    }
+
+    function laterMonth(monthA, monthB) {
+      return getMonthIndex(monthA) >= getMonthIndex(monthB) ? monthA : monthB;
+    }
+
+    function earlierMonth(monthA, monthB) {
+      return getMonthIndex(monthA) <= getMonthIndex(monthB) ? monthA : monthB;
+    }
+
+    function resolveCalendarRange(today) {
+      const currentMonth = getMonthStart(today);
+      const requestedMinMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - calendarRangeMonths, 1);
+      const requestedMaxMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + calendarRangeMonths, 1);
+
+      return {
+        min: hasHolidayData ? laterMonth(requestedMinMonth, minHolidayCalendarMonth) : requestedMinMonth,
+        max: hasHolidayData ? earlierMonth(requestedMaxMonth, maxHolidayCalendarMonth) : requestedMaxMonth
+      };
+    }
+
+    function clampCalendarMonth(monthDate) {
+      if (getMonthIndex(monthDate) < getMonthIndex(minCalendarMonth)) return minCalendarMonth;
+      if (getMonthIndex(monthDate) > getMonthIndex(maxCalendarMonth)) return maxCalendarMonth;
+      return monthDate;
+    }
+
+    function isCalendarMonthInRange(monthDate) {
+      return getMonthIndex(monthDate) >= getMonthIndex(minCalendarMonth) &&
+        getMonthIndex(monthDate) <= getMonthIndex(maxCalendarMonth);
+    }
+
+    function moveCalendarMonth(offset) {
+      const nextMonth = new Date(activeCalendarMonth.getFullYear(), activeCalendarMonth.getMonth() + offset, 1);
+      if (!isCalendarMonthInRange(nextMonth)) return;
+
+      activeCalendarMonth = nextMonth;
+      renderBusinessCalendar();
+    }
+
+    function createCalendarMonth(monthDate, today) {
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      const monthNumber = month + 1;
+      const todayKey = toDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+      const firstWeekday = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, monthNumber, 0).getDate();
+      const monthEl = document.createElement("section");
+      const caption = document.createElement("div");
+      const prevButton = document.createElement("button");
+      const captionText = document.createElement("span");
+      const nextButton = document.createElement("button");
+      const weekdays = document.createElement("div");
+      const days = document.createElement("div");
+      const prevMonth = new Date(year, month - 1, 1);
+      const nextMonth = new Date(year, month + 1, 1);
+
+      monthEl.className = "calendar-month";
+      monthEl.setAttribute("aria-label", `${year}年${monthNumber}月の営業日カレンダー`);
+      caption.className = "calendar-caption";
+      prevButton.type = "button";
+      prevButton.className = "calendar-nav";
+      prevButton.textContent = "‹";
+      prevButton.setAttribute("aria-label", `${getMonthLabel(prevMonth)}を表示`);
+      prevButton.disabled = !isCalendarMonthInRange(prevMonth);
+      prevButton.addEventListener("click", () => moveCalendarMonth(-1));
+      captionText.className = "calendar-caption-text";
+      captionText.textContent = getMonthLabel(monthDate);
+      nextButton.type = "button";
+      nextButton.className = "calendar-nav";
+      nextButton.textContent = "›";
+      nextButton.setAttribute("aria-label", `${getMonthLabel(nextMonth)}を表示`);
+      nextButton.disabled = !isCalendarMonthInRange(nextMonth);
+      nextButton.addEventListener("click", () => moveCalendarMonth(1));
+      weekdays.className = "calendar-grid";
+      days.className = "calendar-grid calendar-days";
+
+      weekLabels.forEach((label) => {
+        const weekday = document.createElement("div");
+        weekday.className = "calendar-weekday";
+        weekday.textContent = label;
+        weekdays.appendChild(weekday);
+      });
+
+      for (let i = 0; i < firstWeekday; i += 1) {
+        const emptyCell = document.createElement("span");
+        emptyCell.className = "calendar-day empty";
+        emptyCell.setAttribute("aria-hidden", "true");
+        days.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const date = new Date(year, month, day);
+        const dateKey = toDateKey(year, month, day);
+        const holidayName = japaneseHolidays[dateKey];
+        const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+        const isClosed = isWeekend || holidayName;
+        const closedReason = holidayName || "休業日";
+        const dayEl = document.createElement("time");
+
+        dayEl.className = "calendar-day";
+        dayEl.dateTime = dateKey;
+        dayEl.textContent = day;
+
+        if (isClosed) {
+          dayEl.classList.add("is-closed");
+          dayEl.title = closedReason;
+          dayEl.setAttribute("aria-label", `${year}年${monthNumber}月${day}日 ${closedReason}`);
+        } else {
+          dayEl.setAttribute("aria-label", `${year}年${monthNumber}月${day}日 営業日`);
+        }
+
+        if (dateKey === todayKey) {
+          dayEl.classList.add("is-today");
+          dayEl.title = dayEl.title ? `${dayEl.title} / 本日` : "本日";
+        }
+
+        days.appendChild(dayEl);
+      }
+
+      caption.append(prevButton, captionText, nextButton);
+      monthEl.append(caption, weekdays, days);
+      return monthEl;
+    }
+
+    function renderBusinessCalendar() {
+      const calendar = document.getElementById("business-calendar");
+      if (!calendar) return;
+
+      const today = getJapanToday();
+      const calendarRange = resolveCalendarRange(today);
+      minCalendarMonth = calendarRange.min;
+      maxCalendarMonth = calendarRange.max;
+
+      if (!activeCalendarMonth) {
+        activeCalendarMonth = getMonthStart(today);
+      }
+      activeCalendarMonth = clampCalendarMonth(activeCalendarMonth);
+
+      calendar.innerHTML = "";
+      calendar.appendChild(createCalendarMonth(activeCalendarMonth, today));
+    }
+
+    renderBusinessCalendar();
   </script>
   <script>
     // Retry app icons with a root-relative path when the current publish path is different.

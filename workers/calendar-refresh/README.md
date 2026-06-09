@@ -2,6 +2,12 @@
 
 This Worker triggers a Cloudflare Pages Deploy Hook on a monthly schedule. The Pages build runs `npm run build`, which fetches the Cabinet Office Japan holidays CSV and generates the static site in `dist/`.
 
+The calendar page should load the generated holiday data before running its calendar script:
+
+```html
+<script src="holidays.generated.js"></script>
+```
+
 ## Cloudflare Pages settings
 
 Set the Pages project build settings to:

@@ -48,19 +48,6 @@ async function fetchJapaneseHolidays() {
   return holidays;
 }
 
-function toHolidayObjectSource(holidays, indent = "    ") {
-  const entries = Object.entries(holidays);
-
-  return [
-    `${indent}const japaneseHolidays = {`,
-    ...entries.map(([dateKey, name], index) => {
-      const comma = index === entries.length - 1 ? "" : ",";
-      return `${indent}  ${JSON.stringify(dateKey)}: ${JSON.stringify(name)}${comma}`;
-    }),
-    `${indent}};`
-  ].join("\n");
-}
-
 async function copyStaticSite() {
   await rm(distDir, { recursive: true, force: true });
   await mkdir(distDir, { recursive: true });
@@ -79,16 +66,12 @@ async function copyStaticSite() {
 
 async function updateIndexHtml(holidays) {
   const indexPath = path.join(distDir, "index.html");
-  let html = await readFile(indexPath, "utf8");
-  const holidaysSource = toHolidayObjectSource(holidays);
-  const holidayBlockPattern = /    const japaneseHolidays = \{[\s\S]*?\n    \};/;
+  const html = await readFile(indexPath, "utf8");
 
-  if (holidayBlockPattern.test(html)) {
-    html = html.replace(holidayBlockPattern, holidaysSource);
-    await writeFile(indexPath, html);
-    console.log("Updated japaneseHolidays block in dist/index.html.");
+  if (html.includes("holidays.generated.js")) {
+    console.log("dist/index.html references holidays.generated.js.");
   } else {
-    console.warn("No japaneseHolidays block found in index.html. Wrote holidays.generated.js only.");
+    console.warn("dist/index.html does not reference holidays.generated.js.");
   }
 
   const generatedJs = [

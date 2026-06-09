@@ -882,7 +882,6 @@
           </div>
           <div class="business-calendar" aria-labelledby="business-calendar-title">
             <h3 id="business-calendar-title">営業日カレンダー</h3>
-            <p>土日祝は休業日です。表示範囲は当月から前後2年です。</p>
             <div class="calendar-legend" aria-hidden="true">
               <span><span class="legend-swatch"></span>営業日</span>
               <span><span class="legend-swatch closed"></span>休業日</span>
@@ -1059,6 +1058,14 @@
         }
 
         days.appendChild(dayEl);
+      }
+
+      const trailingEmptyDays = (7 - ((firstWeekday + daysInMonth) % 7)) % 7;
+      for (let i = 0; i < trailingEmptyDays; i += 1) {
+        const emptyCell = document.createElement("span");
+        emptyCell.className = "calendar-day empty";
+        emptyCell.setAttribute("aria-hidden", "true");
+        days.appendChild(emptyCell);
       }
 
       caption.append(prevButton, captionText, nextButton);
